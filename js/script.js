@@ -56,12 +56,12 @@ Une section AJAX dans la fonction let's go et dans l'objet "game" vont nous perm
 class ControleurAudio {
     constructor(){ // constructeur apellé quand on contruit notre objet
         this.musiqueFond = new Audio('./assets/audio/gamesound.mp3');
-        this.musiqueFlip = new Audio('./assets/audio/win.wav'); // lien musique flip à changer
-        this.musiqueMatch = new Audio('./assets/audio/win.wav'); 
-        this.musiqueUnmatch = new Audio('./assets/audio/loose.wav');
-        this.musiqueVictory = new Audio('./assets/audio/win.wav');
-        this.musiqueGameOver = new Audio('./assets/audio/loose.wav');
-        this.musiqueFond.volume = 0.5;
+        this.musiqueFlip = new Audio('./assets/audio/flip.wav'); // lien musique flip à changer
+        this.musiqueMatch = new Audio('./assets/audio/match.wav'); 
+        this.musiqueUnmatch = new Audio('./assets/audio/unmatch.wav');
+        this.musiqueVictory = new Audio('./assets/audio/victoire.wav');
+        this.musiqueGameOver = new Audio('./assets/audio/gameover.wav');
+        this.musiqueFond.volume = 0.4;
         this.musiqueFlip.volume = 0.2;
         this.musiqueMatchvolume = 0.2;
         this.musiqueUnmatch.volume = 0.2;

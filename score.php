@@ -38,7 +38,7 @@ foreach($db->query('SELECT * FROM memory_game_main_table ORDER BY score DESC LIM
 
 
 <tr>
-<td><?= $joueur->pseudo;//on affiche nos donnes dans des td ! ?></td>
+<td class="pseudo-td"><?= $joueur->pseudo;//on affiche nos donnes dans des td ! ?></td>
 <td><?= $joueur->chrono;?></td>
 <td><?= $joueur->clicks;?></td>
 <td><?= $joueur->score;?></td>
