@@ -1,6 +1,9 @@
 * {
   box-sizing: border-box; }
 
+h1 {
+  font-weight: normal; }
+
 @font-face {
   font-family: "Better";
   src: url("../assets/fonts/better_phoenix_sample.woff") format("woff"), url("../assets/fonts/better_phoenix_sample.ttf") format("ttf"); }
@@ -24,8 +27,8 @@ html {
   justify-content: space-between; }
 
 .info-game {
-  color: #f54809;
-  font-family: Better;
+  color: orangered;
+  font-family: Better, Arial, Helvetica, sans-serif;
   font-weight: normal;
   text-align: center;
   font-size: 1.5em; }
@@ -41,26 +44,22 @@ html {
   position: relative;
   height: 100px;
   width: 100px;
-  border-radius: 25%;
-  border-style: solid;
-  border-color: white; }
+  border-radius: 25%; }
+  .carte.visible .carte-cache {
+    transform: rotateY(-180deg); }
+  .carte.visible .carte-revele {
+    transform: rotateY(0); }
 
 .carte-style {
   position: absolute;
-  width: 100%;
-  height: 100%;
+  width: 100px;
+  height: 100px;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
   backface-visibility: hidden;
   transition: transform 200ms ease-in-out; }
-
-.carte.visible .carte-cache {
-  transform: rotateY(-180deg); }
-
-.carte.visible .carte-revele {
-  transform: rotateY(0); }
 
 .carte.match .valeur-carte {
   animation: dance 0.8s linear infinite 200ms; }
@@ -77,18 +76,31 @@ html {
   border-radius: 25%;
   background-color: white;
   transform: rotateX(180deg); }
-
-.carte-revele:hover .valeur-carte {
-  transform: scale(1); }
+  .carte-revele:hover .valeur-carte {
+    transform: scale(1); }
 
 .carte-cache {
   background: linear-gradient(orangered, gold);
-  border-radius: 25%; }
+  border-radius: 25%;
+  border-style: solid;
+  border-color: white;
+  transition: all 0.3s ease-in-out; }
+  .carte-cache:hover .ornement {
+    width: 50%; }
+  .carte-cache:hover {
+    border-color: white; }
 
 .ornement {
   position: absolute;
   width: 80%;
   transition: width 200ms ease-in-out; }
+
+.ornement-haut {
+  top: 0; }
+
+.ornement-bas {
+  transform: rotateX(180deg);
+  bottom: 0; }
 
 .valeur-carte {
   transition: transform 200ms ease-in-out;
@@ -98,16 +110,6 @@ html {
   height: 100px;
   border-style: solid;
   border-color: white; }
-
-.ornement-haut {
-  top: 0; }
-
-.ornement-bas {
-  transform: rotateX(180deg);
-  bottom: 0; }
-
-.carte-cache:hover .ornement {
-  width: 90px; }
 
 .surcouche-info {
   display: none;
@@ -121,11 +123,10 @@ html {
   z-index: 100;
   color: orangered;
   font-family: Better, Arial, Helvetica, sans-serif; }
-
-.surcouche-info.visible {
-  display: flex;
-  flex-direction: column;
-  animation: surcouche-anim 500ms forwards; }
+  .surcouche-info.visible {
+    display: flex;
+    flex-direction: column;
+    animation: surcouche-anim 500ms forwards; }
 
 @keyframes surcouche-anim {
   from {
@@ -136,7 +137,7 @@ html {
     font-size: 6em; } }
 
 .surcouche-petit-texte {
-  font-size: .3em; }
+  font-size: 0.3em; }
 
 #texte-game-over {
   text-align: center; }

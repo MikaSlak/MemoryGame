@@ -4,6 +4,7 @@
         <title>Memory Game</title>
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <link rel="stylesheet" type="text/css" href="./css/style.css"/>
+        <script src="./js/script.js" async></script> 
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     </head>
     <body>
@@ -18,7 +19,7 @@
             <span  class="surcouche-petit-texte">Clic pour recommencer</span>
         </div>
         
-        <div id="texte-victoire" class="surcouche-info "><!--la classe visible va nous permettre d'afichier/masquer l'overlay-->
+        <div id="texte-victoire" class="surcouche-info"><!--la classe visible va nous permettre d'afichier/masquer l'overlay-->
             VICTOIIIRE
             <span  class="surcouche-petit-texte">Clic pour recommencer</span>
         </div>
@@ -35,13 +36,13 @@
                 <div class="info-game">
                  Chrono :<span id="temps-restant">60</span>   
                 </div>
-                <div class="info-game">
-                    Essais :<span id="essais">0</span>   
-                </div>
+
             </div>
 
+
             <!--On place nos 16 cartes dans le conteneur général : -->
-            <div class="carte"><!--la classe visible va nous permettre d'afichier/masquer la carte-->
+            <div class="carte"><!--la classe visible va nous permettre d'afficher/masquer la carte-->
+                               <!--et la classe match va nous permettre de lancer la petite animation de l'image fruit-->
                 <div class="carte-cache carte-style">
                     <img class="ornement ornement-haut" 
                     src="./assets/imgs/ornement.png">
@@ -267,13 +268,17 @@
 
         
 
-
+            <div class="conteneur-info-game">
+                <div class="info-game">
+                    Essais :<span id="essais">0</span>   
+                </div>
+            </div>
           
 
         </div>
 
 
-        <script src="./js/script.js"></script> 
+        
         
     </body>
 </html>
