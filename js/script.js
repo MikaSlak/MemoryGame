@@ -14,7 +14,7 @@ quand la page est chargée (cf : https://developer.mozilla.org/fr/docs/Web/Event
 
 Cette fonction let's go va gérer les differentes façon de lancer notre jeu qui sera représenté par un objet "game"
 on pourra lancer le jeux de trois manières : 
-    - au lancement de la partie, quand le joueur a entré son pseudo et a clické sur GO (ou appuyé sur la touche entrée)
+    - au lancement de la partie, quand le joueur à entré son pseudo et à clické sur GO (ou appuyé sur la touche entrée)
     - apres une victoire pour relancer une partie
     - apres un game over pour relancer une partie
 Ces trois façon de lancer ma game seront représentés coté html par trois div de classe "surcouche-info".
@@ -22,9 +22,10 @@ La fonction let's go va gérer tout les eventLisener sur toute ces surcouches et
 lancerGame() de notre objet "game".
 La fonction let's go va également gérer tout les eventListener sur les cartes qui apelleront la methode retournerCarte de notre objet game
 
-Pour le reste tout sera géré grace au differentes methode de l'objet game.
+Pour le reste tout sera géré grace aux differentes methode de l'objet game.
 l'objet game est composé des methodes suivantes :
     constructeur(tempsTotal, cartes) 
+    map_range() // appelée dans notre lancerChronometre pour recalibrer notre probressbar
     lancerGame()
     cacherCartes(cartes)
     lancerChronometre()
@@ -38,24 +39,9 @@ l'objet game est composé des methodes suivantes :
     melangerCartes()
     puisJeRetournerCarte(carte)
 Regarder les commentaires dans la classe "Game" pour plus de détail sur chaque methode
+
+Une section AJAX dans la fonction let's go et dans l'objet "game" vont nous permettre d'apeller la scoreBoard (asynchrone pour éviter chargement longs)
 */
-
-// petite fonction qui nous servira à recalibrer les plages de valeurs pour la progress bar circulaire
-function map_range(value, low1, high1, low2, high2) { // creation fonction map
-    return low2 + (high2 - low2) * (value - low1) / (high1 - low1);
-}
-
-// et en parlant de progressBar, voila notre variable qui vient la récuperer dans le DOM + un objet ProgressBar (cf ./js/progressbar-min.js)
-let progressBar = document.getElementById('progress-bar-circulaire');
-let bar = new ProgressBar.Circle(progressBar, {
-    strokeWidth: 6,
-    easing: 'easeInOut',
-    duration: 100,
-    color: '#FF4500',
-    trailColor: '#FFF',
-    trailWidth: 1,
-    svgStyle: null
-  });
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -69,12 +55,12 @@ let bar = new ProgressBar.Circle(progressBar, {
 
 class ControleurAudio {
     constructor(){ // constructeur apellé quand on contruit notre objet
-        this.musiqueFond = new Audio('../assets/audio/gamesound.mp3');
-        this.musiqueFlip = new Audio('../assets/audio/win.wav'); // lien musique flip a changer
-        this.musiqueMatch = new Audio('../assets/audio/win.wav'); 
-        this.musiqueUnmatch = new Audio('../assets/audio/loose.wav');
-        this.musiqueVictory = new Audio('../assets/audio/win.wav');
-        this.musiqueGameOver = new Audio('../assets/audio/loose.wav');
+        this.musiqueFond = new Audio('./assets/audio/gamesound.mp3');
+        this.musiqueFlip = new Audio('./assets/audio/win.wav'); // lien musique flip à changer
+        this.musiqueMatch = new Audio('./assets/audio/win.wav'); 
+        this.musiqueUnmatch = new Audio('./assets/audio/loose.wav');
+        this.musiqueVictory = new Audio('./assets/audio/win.wav');
+        this.musiqueGameOver = new Audio('./assets/audio/loose.wav');
         this.musiqueFond.volume = 0.5;
         this.musiqueFlip.volume = 0.2;
         this.musiqueMatchvolume = 0.2;
@@ -123,16 +109,42 @@ class ControleurAudio {
 // le coeur du script !!
 class Game{
     constructor(tempsTotal, cartes){ 
-        // notre constructeur (1ere methode apellée a la construction de l'objet) demande deux arguments,
-        // contrairement a notre constructeur controleurAudio,
-        // un int temps total pour la partie 
+        // notre constructeur (1ere methode apellée à la construction de l'objet) demande deux arguments
+        // contrairement à notre constructeur controleurAudio,
+        // un int temps total pour la partie ,
         // et un tableau de cartes !
         this.controleurAudio = new ControleurAudio();
         this.tableauCartes = cartes;
         this.tempsTotal = tempsTotal;
         this.tempsRestant = tempsTotal;
         this.chrono = document.getElementById('temps-restant');
-        this.essais = document.getElementById('essais');    
+        this.essais = document.getElementById('essais');   
+        // SECTION AJAX INTERNE A L'OBJET 
+        this.xmlhttp = new XMLHttpRequest();
+        this.xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+              document.getElementById("scoreCore").innerHTML = this.responseText;
+              document.getElementById("scoreCore2").innerHTML = this.responseText;
+              document.getElementById("scoreCore3").innerHTML = this.responseText;
+            }
+      
+          };
+          // SECTION PROGRESS BAR
+        this.progressBar = document.getElementById('progress-bar-circulaire');
+        this.bar = new ProgressBar.Circle(this.progressBar, {
+        strokeWidth: 6,
+        easing: 'easeInOut',
+        duration: 100,
+        color: '#FF4500',
+        trailColor: '#FFF',
+        trailWidth: 1,
+        svgStyle: null
+  });
+    }
+
+    // petite methode qui nous servira à recalibrer les plages de valeurs pour la progress bar circulaire
+    map_range(value, low1, high1, low2, high2) { 
+        return low2 + (high2 - low2) * (value - low1) / (high1 - low1);
     }
 
     //methode pour lancer notre partie
@@ -143,10 +155,10 @@ class Game{
         // et si on recherche une paire ou si on clique pour la 
         // premiere fois
         this.totalClicks = 0;
-        this.tempsRestant = this.tempsTotal; // reset temps a chauqe fois qu'on lance game
+        this.tempsRestant = this.tempsTotal; // reset temps à chaque fois qu'on lance game
         this.tableauCartesMatch = []; // on va placer toute nos cartes matché dans ce tableau
         this.busy = true;
-        bar.animate(1); // on réinitialise la progressbar circulaire
+        this.bar.animate(1); // on réinitialise la progressbar circulaire
         setTimeout(() =>{ // on fait un timeout de 500 ms pour le smoooooth
             this.controleurAudio.lancerMusiqueFond();
             this.melangerCartes();
@@ -171,15 +183,17 @@ class Game{
     // on apelle une fonction toute les 1000ms = 1seconde
         return setInterval(() => {
             this.tempsRestant--; // on enleve 1 au temps restant
+            // ... et ....
             // on va utiliser une variable et la fonction map_range
             // pour transformer notre ecart de temps
-            // qui va de 0 a this.tempsTotal
-            // vers un écart qui vas de 0 a 100
+            // qui va de 0 à this.tempsTotal
+            // vers un écart qui va de 0 à 100
             // CAR notre bar.animate a besoin d'un float entre 0 et 1
             // et on aura plus qu'a divier cette nouvelle valeur par 100
-            // histoire davoir une progressBar qui s'adapte au temps qu'on a donne [a notre][plus précisement:au constructeur de l']objet game
-            let temps0a100 = map_range(this.tempsRestant, 0, this.tempsTotal, 0, 100);
-            bar.animate(temps0a100/100); 
+            // histoire d'avoir une progressBar qui s'adapte au temps qu'on a donne [a notre][plus précisement:au constructeur de l']objet game
+            let temps0a100 = this.map_range(this.tempsRestant, 0, this.tempsTotal, 0, 100);
+            temps0a100 = Math.round(temps0a100); // on va arrondir à deux décimales.
+            this.bar.animate(temps0a100/100); 
             this.chrono.innerText = this.tempsRestant; // on affiche le temps restant dans le span dédié
                 if(this.tempsRestant<(0.10*this.tempsTotal)){ // si on est en dessous de 10 % de notre temps total on colore en rouge le texte chrono
                     this.chrono.style.color="#FF0000";
@@ -200,10 +214,14 @@ class Game{
 
     // methode victoire
     victoire(){
-        clearInterval(this.chronometre); // on clean le chronometre
         this.controleurAudio.lancerSonVictory(); // on lance le son victoiiiire
-        document.getElementById('texte-victoire').classList.add('visible'); // et on rend visible notre surcouche victiore
-
+        document.getElementById('pseudoJoueur').value =  document.getElementById('playerName').innerHTML;
+        document.getElementById('chronoFinal').value = String(this.tempsRestant);
+        document.getElementById('clicksFinal').value = String(this.totalClicks);
+        let calculScore = (this.tempsRestant*100) - (this.totalClicks*10);
+        document.getElementById('scoreFinal').value = String(calculScore);
+        document.getElementById('victoireAjoutDbForm').submit();
+        clearInterval(this.chronometre); // on clean le chronometre
     }
 
     //methode pour retourner une carte
@@ -218,7 +236,6 @@ class Game{
             else
                 this.CheckerCarte = carte; // sinon, on est sur un premier click de recherche de paire, et on ajoute cette carte
                 // dans notre propriété "checherCarte" qui va nous permettre de checker si il y a match ou pas au prochain click
-
       } 
     }
 
@@ -227,18 +244,18 @@ class Game{
         if(this.recupTypeCarte(carte) === this.recupTypeCarte(this.CheckerCarte)) // si carte = checkercarte alors on match
             this.yesOnMatch(carte, this.CheckerCarte);
         else
-            this.pasDeMatch(carte, this.CheckerCarte); // sinon on ajoute cette carte a checker carte (premier clic pour paire)
+            this.pasDeMatch(carte, this.CheckerCarte); // sinon on ajoute cette carte à checker carte (premier clic pour paire)
 
         this.CheckerCarte=null;
     }
 
-    // methode si on a match en tre 2 cartes
+    // methode si on a match entre 2 cartes
     yesOnMatch(carte1, carte2){
         // on ajouter ces cartes au tableau des match ! 
         this.tableauCartesMatch.push(carte1);
         this.tableauCartesMatch.push(carte2);
         carte1.classList.add('match'); // on ajoute class match pour animation css
-        carte2.classList.add('match'); // sur les deux cartes matché
+        carte2.classList.add('match'); // sur les deux cartes matchées
         this.controleurAudio.lancerSonMatch(); // on lance le son match
         // et si la longeur du tableauCarteMatch est égal à la longeur du tableauCartes alors on a un WIN ! 
             if(this.tableauCartesMatch.length === this.tableauCartes.length){
@@ -313,6 +330,21 @@ class Game{
 function letsGo(){
     // on peut décommenter le petit alert en dessous pour constater que cette fonction se lance bien au chargement de la page
     //alert('page chargée oh yeah !');
+    let nomExisteDeja=false;
+   
+    // SECTION AJAX QUI VA NOUS PERMETTRE DE LANCER L'AFFICHAGE DU SCORE DE MANIERE ASYNCHRONE (MERCI AJAX !)
+    // POUR LE LANCEMENT DU JEU AVANT QU'UN ATTRIBUT DE L'OBJET NE S'EN OCCUPE EN JEU !
+    let xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("scoreCore").innerHTML = this.responseText;
+            document.getElementById("scoreCore2").innerHTML = this.responseText;
+            document.getElementById("scoreCore3").innerHTML = this.responseText;
+          }
+        };
+    xmlhttp.open("GET","score.php",true); // cf  ./score.php
+    xmlhttp.send();
+    //fin de ma section ajax
     // On va charger les surcouches(start, restart, victory, game over) dans trois variables differentes pour dissocier les eventListener
     let surcouche1 = document.getElementById('texte-lancement');
     let surcouche2 = document.getElementById('texte-game-over');
@@ -325,28 +357,55 @@ function letsGo(){
     let cartes = document.getElementsByClassName('carte');
     // et on converti en tableau : 
     cartes = Array.from(cartes);
-    ////////////////////////////////////////////////////
     ///////////////////////////////////////////////////
     // CREATION DE L'OBJET GAME                      //
-    let game = new Game(100, cartes);                // 
+    let game = new Game(60, cartes);                 // 
     ///////////////////////////////////////////////////
-    ///////////////////////////////////////////////////
-    
-    // SURCOUCHE LANCEMENT JEU
     //gestion bouton start
     // si on click
     btnStart.addEventListener('click', function startClicked(){
-
         // on va stoquer + afficher le pseudo du joueur
         let playerName = document.getElementById('inputPseudo').value;
         let playerSpan = document.getElementById('playerName');
-        // VERIFICATION REGEX SUR playerName avant de lancer le game !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        // on fait disparaitre la surcouche en supprimant la classe "visible"
-        surcouche1.classList.remove('visible'); 
-        playerSpan.innerText=playerName;
-        game.lancerGame(); // ET ON LANCE LA METHODE lancerGame() de l'objet game
+        // on stoque le noms des joueurs de notre top5
+        let tableauJoueurs = document.getElementsByClassName('pseudo-td');
+        //on prepare un regex pour la verification du pseudo
+        let regex = /^[A-Za-z0-9 ]+$/;
+        if(regex.test(playerName)){ // si on a pas de caracteres spéciaux dans le pseudo
+            for(i = 0; i< (tableauJoueurs.length/3);i++){ // et une petite boucle pour verifier que le pseudo n'existe pas deja ! 
+                console.log(tableauJoueurs[i].innerHTML + ' et ' + playerName);
+                if(tableauJoueurs[i].innerHTML.trim()==playerName.trim()){
+                   nomExisteDeja = true; // si il existe déja on met ma variable a true
+                }
+            }
+                if(!nomExisteDeja){ // si le pseudo n'existe pas on lance la game !
+                    surcouche1.classList.remove('visible'); 
+                    playerSpan.innerText=playerName;
+                    game.lancerGame(); // ET ON LANCE LA METHODE lancerGame() de l'objet game
+                }else{
+                   // console.log('le nom existe deja')
+                    document.getElementById('inputPseudo').style.borderColor="red";
+                    document.getElementById('inputPseudo').style.borderWidth = "thick";  
+                    document.getElementById('inputPseudo').blur(); //on fait perdre le focus à la zone texte  
+                }
+
+
+        }else{
+            // console.log('le nom comporte des caracteres speciaux')
+            document.getElementById('inputPseudo').style.borderColor="red";
+            document.getElementById('inputPseudo').style.borderWidth = "thick"; 
+            document.getElementById('inputPseudo').blur();
+        }
+    });
+    
+    // permet de remettre notre nomExisteDeja sur false si on re click sur l'input pseudo qui aura perdu son focus
+    let playerNameFocus = document.getElementById('inputPseudo');
+    playerNameFocus.addEventListener('focus', () => {
+        //console.log('focus');
+        nomExisteDeja = false;
     });
 
+    
     // gestion touche "entrée" dans input pseudo
     inputPseudo.addEventListener("keyup", (event)=>{
         if (event.keyCode === 13) { // code 13 = entrée !!
@@ -355,19 +414,19 @@ function letsGo(){
     });
     
     // SURCOUCHE GAME OVER
-    surcouche2.addEventListener('click', ()=>{
+    surcouche2.addEventListener('click', ()=>{ // si on click on relance la game et on fait disparaitre la surcouche
         surcouche2.classList.remove('visible'); 
         game.lancerGame();
     });
 
     // SURCOUCHE VICTOIRE
-    surcouche3.addEventListener('click', ()=>{
+    surcouche3.addEventListener('click', ()=>{ // idem pour la victoire
         surcouche3.classList.remove('visible'); 
         game.lancerGame();
     });
 
     // on va maintenant parcourir notre tableau de cartes
-    // pour ajouter un eventListener sur chaque carte (singulier!) qui apellera la methode .retournerCarte() de notre objet game;
+    // pour ajouter un eventListener sur chaque carte qui apellera la methode .retournerCarte() de notre objet game;
     cartes.forEach(carte => {
         carte.addEventListener('click', () => {
             game.retournerCarte(carte); // ON LANCE LA METHODE retournerCarte() DE L'OBJ GAME !!!!!!!!!!!

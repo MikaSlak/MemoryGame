@@ -11,19 +11,22 @@ h1 {
 
 body {
   margin: 0;
-  background: radial-gradient(white, #494739); }
+  background: radial-gradient(white, gold); }
 
 html {
   min-height: 100vh; }
 
+form {
+  display: none; }
+
 .titre-game {
-  color: #00ffea;
+  color: orangered;
   font-family: Better, Arial, Helvetica, sans-serif;
   text-align: center;
   font-size: 3em; }
 
 .info-game, #temps-restant, .conteneur-info-game-essais {
-  color: #00ffea;
+  color: orangered;
   font-family: Better, Arial, Helvetica, sans-serif;
   font-weight: normal;
   text-align: center;
@@ -76,7 +79,7 @@ html {
     transform: scale(1); }
 
 .carte-cache {
-  background: linear-gradient(#00ffea, #494739);
+  background: linear-gradient(orangered, gold);
   border-radius: 25%;
   border-style: solid;
   border-color: white;
@@ -115,7 +118,7 @@ html {
   left: 0;
   right: 0;
   z-index: 100;
-  color: #00ffea;
+  color: orangered;
   font-family: Better, Arial, Helvetica, sans-serif; }
   .surcouche-info.visible {
     display: flex;
@@ -146,7 +149,7 @@ html {
   text-align: center; }
 
 #inputPseudo {
-  width: 75%;
+  width: 35%;
   margin-top: 50px;
   margin-right: auto;
   margin-left: auto;
@@ -154,24 +157,24 @@ html {
   transition-duration: 0.2s;
   font-size: .3em;
   font-family: Better, Arial, Helvetica, sans-serif;
-  color: #00ffea;
+  color: orangered;
   text-align: center; }
   #inputPseudo:focus {
-    background-color: #ccfffb; }
+    background-color: #ffdacc; }
 
 #btnStart {
   margin-right: auto;
   margin-left: auto;
-  border-color: #00ffea;
+  border-color: orangered;
   font-size: .3em;
   font-family: Better, Arial, Helvetica, sans-serif;
-  width: 25%;
+  width: 35%;
   margin-top: 50px;
   background-color: white;
-  color: #00ffea;
+  color: orangered;
   transition-duration: 0.4s; }
   #btnStart:hover {
-    background-color: #00ffea;
+    background-color: orangered;
     color: white; }
 
 .info-game-chrono {
@@ -194,18 +197,20 @@ html {
   left: 50%;
   transform: translate(-50%, -50%); }
 
-.tableScoreBoard {
-  font-size: 30%; }
-
 th, tr, td {
-  border: 1px solid #00ffea;
+  border: 1px solid orangered;
   border-radius: 5%; }
 
 .tableScoreBoard {
+  font-size: 30%;
   margin-right: auto;
   margin-left: auto;
   margin-top: 50px;
-  width: 75%; }
+  width: 35%;
+  height: 50%; }
+
+th {
+  background-color: #4d1500; }
 
 .conteneur-info-game-essais {
   display: none; }
@@ -215,6 +220,12 @@ th, tr, td {
     grid-template-columns: repeat(2, auto); }
   .surcouche-texte-principal {
     font-size: 0.7em; }
+  .tableScoreBoard {
+    font-size: 20%; }
+  #inputPseudo {
+    width: 65%; }
+  #btnStart {
+    width: 65%; }
   .titre-game {
     font-size: 1.5em; }
   #progress-bar-circulaire {

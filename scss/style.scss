@@ -3,8 +3,8 @@
 ////////////////////// THEME GENERAL :                   // 
 ///////////////////////////////////////////////////////////
 $font-game:Better, Arial, Helvetica, sans-serif;
-$general-color1:rgb(0, 255, 234);
-$general-color2:rgb(73, 71, 57);
+$general-color1:orangered;
+$general-color2:gold;
 $general-color3:white;
 $overlay-bkgnd: rgba(0,0,0,.9);
 ///////////////////////////////////////////////////////////
@@ -26,7 +26,7 @@ $card-height:100px;
 // division taille carte si ecran < 600px
 $card-width-min-division:1.5;
 $card-height-min-division:1.5;
-// arrondir les bordure de carte
+// arrondir les bordures de carte
 $card-radius:25%;
 // couleur carte face
 $card-front-color:$general-color3;
@@ -51,12 +51,18 @@ $overlay-text-size1:6em;
 $overlay-text-size1-small:.7em;
 $overlay-text-size2:.3em;
 
-/////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////
-////////////////////// SECTION GENERALE :                    ////
-///////////////////// *, fonts, body, h1, html, .titre-game  ////
-/////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+////////////////////// SECTION GENERALE :                     //
+///////////////////// *,                                      //
+/////////////////////fonts,                                   //
+//////////////////////body,                                   // 
+//////////////////////h1,                                     //
+//////////////////////html,                                   //
+//////////////////////.titre-game,                            //
+//////////////////////form                                    //
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
 
 // Pour nous faciliter la mise en page et ne pas s'embeter avec calcul padding et border
 // cf :  https://developer.mozilla.org/fr/docs/Web/CSS/box-sizing
@@ -64,7 +70,7 @@ $overlay-text-size2:.3em;
     box-sizing: border-box;
 }
 
-// on importe nos font
+// on importe notre font
 @font-face{
     font-family:"Better";
     src: url("../assets/fonts/better_phoenix_sample.woff") format("woff"), 
@@ -83,12 +89,17 @@ h1{
     background: radial-gradient($bkgnd-color1, $bkgnd-color2);
  }
 
- // Et pour que ce dégradé ne se répete pas et fasse toute la taille de l'écran : 
+ // Et pour que ce dégradé ne se répete pas + remplisse toute la taille de l'écran : 
  html {
     min-height: 100vh;    
     // cf : https://developer.mozilla.org/fr/docs/Web/CSS/length 
     // pour unitée vh
  }
+
+ form{
+
+    display:none;
+  }
 
  // on s'occupe de styliser notre titre :
  .titre-game {
@@ -165,7 +176,7 @@ h1{
     }
 }
 
-// on definit les regles de style generale pour les boutons
+// on definit les regles de style general pour les boutons
 .carte-style{
     position:absolute; // pour la supperposition des ornements
     width: $card-width;
@@ -175,7 +186,7 @@ h1{
     justify-content:center;
     align-items: center;
     overflow:hidden; // on cache tout ce qui pourrait sortir de la carte
-    backface-visibility: hidden;// on permet a la carte révélée d'etre caché par sa rotation à 180degres
+    backface-visibility: hidden;// on permet à la carte révélée d'etre cachée par sa rotation à 180degres
     transition: transform 200ms ease-in-out;//pour transition carte retourné
 }
 
@@ -200,7 +211,7 @@ h1{
 .carte-revele{
     border-radius: $card-radius;  
     background-color: $card-front-color;
-    transform: rotateX(180deg); // on cache la carte revele en la tournant a 180degres
+    transform: rotateX(180deg); // on cache la carte revele en la tournant à 180degres
     // gestion mini anim survol carte révélé
     &:hover .valeur-carte{
         transform:scale(1);
@@ -325,13 +336,14 @@ text-align:center;
 ///////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
 ////////////// SECTION OVERLAY TEXTE LANCEMENT (surcouche lancement jeu) // 
+////////////// INPUT TEXT ET BOUTON                                      //
 ////////////// #texte-lancement,                                         //
 ////////////// #inputPseudo,                                             // 
 ////////////// #btnStart,                                                // 
 ///////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
 #inputPseudo{ // input pseudo
-    width: 75%;
+    width: 35%;
     margin-top: 50px;
     margin-right: auto;
     margin-left: auto;
@@ -353,7 +365,7 @@ text-align:center;
     border-color: $overlay-button-color;
     font-size:.3em;
     font-family: $font-game;
-    width: 25%;
+    width: 35%;
     margin-top: 50px;
     background-color: $overlay-button-font-color;
     color: $overlay-button-color;
@@ -401,9 +413,6 @@ text-align:center;
 //////// .tableScoreBoard                 // 
 //////////////////////////////////////////// 
 //////////////////////////////////////////// 
-.tableScoreBoard {
-    font-size: 30%;
-}
 
 th, tr, td{
 border: 1px solid $overlay-font-color;
@@ -411,10 +420,17 @@ border-radius:5%;
 }
 
 .tableScoreBoard{
+    font-size: 30%;
     margin-right: auto;
     margin-left: auto;
-    margin-top: 50px;
-   width: 75%;
+    margin-top: 50px; 
+   width: 35%;
+   height: 50%;
+}
+
+th{
+    background-color: darken($overlay-font-color, 35);
+
 }
 
 //////////////////////////////////////////////////////////////////////////// 
@@ -426,7 +442,6 @@ border-radius:5%;
     @extend .info-game;
     display:none;
 }
-
 
 ///////////////////////////////////////////////////////////
 ////////////////////// SECTION MEDIA:                   //
@@ -443,7 +458,17 @@ border-radius:5%;
         font-size: $overlay-text-size1-small; // on diminue la taille du texte principal
     }
 
-    .titre-game{ // on divise l
+    .tableScoreBoard{
+        font-size: 20%;
+    }
+    #inputPseudo{ // input pseudo
+        width: 65%;
+    }
+    #btnStart{ 
+        width: 65%;
+    }
+
+    .titre-game{ // 
         font-size:$title-size/$title-size-min-division;
     }
     #progress-bar-circulaire {
