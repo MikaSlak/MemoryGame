@@ -1,0 +1,149 @@
+* {
+  box-sizing: border-box; }
+
+@font-face {
+  font-family: "Better";
+  src: url("../assets/fonts/better_phoenix_sample.woff") format("woff"), url("../assets/fonts/better_phoenix_sample.ttf") format("ttf"); }
+
+body {
+  margin: 0;
+  background: radial-gradient(white, gold); }
+
+html {
+  min-height: 100vh; }
+
+.titre-game {
+  color: orangered;
+  font-family: Better, Arial, Helvetica, sans-serif;
+  text-align: center;
+  font-size: 3em; }
+
+.conteneur-info-game {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between; }
+
+.info-game {
+  color: #f54809;
+  font-family: Better;
+  font-weight: normal;
+  text-align: center;
+  font-size: 1.5em; }
+
+.conteneur-game {
+  display: grid;
+  margin: 50px;
+  justify-content: center;
+  grid-template-columns: repeat(4, auto);
+  grid-gap: 10px; }
+
+.carte {
+  position: relative;
+  height: 100px;
+  width: 100px;
+  border-radius: 25%;
+  border-style: solid;
+  border-color: white; }
+
+.carte-style {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  backface-visibility: hidden;
+  transition: transform 200ms ease-in-out; }
+
+.carte.visible .carte-cache {
+  transform: rotateY(-180deg); }
+
+.carte.visible .carte-revele {
+  transform: rotateY(0); }
+
+.carte.match .valeur-carte {
+  animation: dance 0.8s linear infinite 200ms; }
+
+@keyframes dance {
+  0%, 100% {
+    transform: rotate(0); }
+  25% {
+    transform: rotate(-20deg); }
+  75% {
+    transform: rotate(30deg); } }
+
+.carte-revele {
+  border-radius: 25%;
+  background-color: white;
+  transform: rotateX(180deg); }
+
+.carte-revele:hover .valeur-carte {
+  transform: scale(1); }
+
+.carte-cache {
+  background: linear-gradient(orangered, gold);
+  border-radius: 25%; }
+
+.ornement {
+  position: absolute;
+  width: 80%;
+  transition: width 200ms ease-in-out; }
+
+.valeur-carte {
+  transition: transform 200ms ease-in-out;
+  transform: scale(0.9);
+  border-radius: 25%;
+  width: 100px;
+  height: 100px;
+  border-style: solid;
+  border-color: white; }
+
+.ornement-haut {
+  top: 0; }
+
+.ornement-bas {
+  transform: rotateX(180deg);
+  bottom: 0; }
+
+.carte-cache:hover .ornement {
+  width: 90px; }
+
+.surcouche-info {
+  display: none;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  color: orangered;
+  font-family: Better, Arial, Helvetica, sans-serif; }
+
+.surcouche-info.visible {
+  display: flex;
+  flex-direction: column;
+  animation: surcouche-anim 500ms forwards; }
+
+@keyframes surcouche-anim {
+  from {
+    background-color: rgba(0, 0, 0, 0);
+    font-size: 1em; }
+  to {
+    background-color: rgba(0, 0, 0, 0.8);
+    font-size: 6em; } }
+
+.surcouche-petit-texte {
+  font-size: .3em; }
+
+#texte-game-over {
+  text-align: center; }
+
+.surcouche-info {
+  text-align: center; }
+
+@media (max-width: 600px) {
+  .conteneur-game {
+    grid-template-columns: repeat(2, auto); } }

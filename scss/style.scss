@@ -1,0 +1,284 @@
+
+///////////////////////////////////////////////////////////
+////////////////////// SECTION GENERALE :        //////////
+///////////////////// *, fonts, body, html, .titre-game////
+///////////////////////////////////////////////////////////
+
+// Pour nous faciliter la mise en page et ne pas s'embeter avec calcul padding et border
+// cf :  https://developer.mozilla.org/fr/docs/Web/CSS/box-sizing
+* {
+    box-sizing: border-box;
+}
+
+
+// on importe nos font
+@font-face{
+    font-family:"Better";
+    src: url("../assets/fonts/better_phoenix_sample.woff") format("woff"), 
+    url("../assets/fonts/better_phoenix_sample.ttf") format("ttf")
+}
+
+
+// On applique une couleur de fond en dégradé
+ body {
+    margin:0;
+    background: radial-gradient(white, gold);
+ }
+
+
+ // Et pour que ce dégradé ne se répete pas et fasse toute la taille de l'écran : 
+ html {
+    min-height: 100vh;    
+    // cf : https://developer.mozilla.org/fr/docs/Web/CSS/length 
+    // pour unitée vh
+ }
+
+
+ // on s'occupe de styliser notre titre :
+ .titre-game {
+    color:orangered;
+    font-family: Better, Arial, Helvetica, sans-serif;
+    //font-weight: normal;
+    text-align:center;
+    font-size: 3em;
+ }
+
+
+///////////////////////////////////////////////////////////
+////////////////////// SECTION CONTENEURS et INFO GAME : //
+///////////////////// .conteneur-info-game,              //
+///////////////////// .info-game,                        //
+///////////////////// . conteneneur-game                 //
+///////////////////////////////////////////////////////////
+
+
+
+.conteneur-info-game{ // on veut que nos infos de jeux prennet toute la premiere ligne de la grille
+    grid-column : 1 / -1 ; // 1 : premiere cellule et -1 : dernière cellule
+    display : flex; // on met les deux infos sur la meme ligne
+    justify-content: space-between;
+}
+
+
+ // on stylise nos informations de jeux
+ .info-game {
+    color:rgb(245, 72, 9);
+    font-family: Better;
+    font-weight: normal; // par defaut les h1 sont gras !
+    text-align:center;
+    font-size: 1.5em;
+ }
+
+
+.conteneur-game{
+    display : grid ; // affichage sous forme de grilles
+    margin : 50px;
+    justify-content: center;
+    grid-template-columns: repeat(4, auto); // 4 colones qui s'ajusteront quelque soit la taille de leur élément interne
+    grid-gap : 10px; // on séparte chaque éléments aevc un gap de 10pc
+    //perspective: 500px; // pour la rotation 3d des cartes
+}
+
+
+
+
+///////////////////////////////////////////////////////////
+///////////////////// SECTION CARTES :                   //
+///////////////////// .carte,                            //
+///////////////////// .carte-style,                      //
+///////////////////// . conteneneur-game,                //
+///////////////////// .carte.visible .carte-cache,       //
+///////////////////// .carte.visible .carte-revele,      //
+///////////////////// .carte.match .valeur-carte,        //
+///////////////////// .carte-revele,                     //
+///////////////////// .carte-revele:hover .valeur-carte, //
+///////////////////// .carte-cache,                      //
+///////////////////// .ornement,                         //
+///////////////////// .ornement-haut,                    //
+///////////////////// .ornement-bas,                     //
+///////////////////// .valeur-carte,                     //
+///////////////////// .carte-cache:hover .ornement       //
+///////////////////////////////////////////////////////////
+
+
+// on s'occupe de nos cartes : 
+.carte{
+    position:relative;
+    //background: linear-gradient(orangered, gold);
+    height: 100px;
+    width: 100px;
+    border-radius: 25%;
+    border-style: solid;
+    border-color: white;
+}
+
+
+     // on definit les regles de style generale pour les boutons
+.carte-style{
+    position:absolute; // pour la supperposition des ornements
+    width: 100%;
+    height: 100%;
+    display:flex; //pour se faciliter la dispositions des ornements
+    justify-content:center;
+    align-items: center;
+    overflow:hidden; // on cache tout ce qui pourrait sortir de la carte
+    backface-visibility: hidden;// on permet a la carte révélée d'etre caché par sa rotation à 180degres
+    transition: transform 200ms ease-in-out;//pour transition carte retourné
+}
+
+
+
+////////// GESTION DE LA ROTATION DE LA CARTE CACHé / CARTE RéVéLé
+.carte.visible .carte-cache {
+    transform: rotateY(-180deg);
+}
+
+.carte.visible .carte-revele {
+    transform: rotateY(0);
+}
+
+//section animation quand le match est bon 
+ .carte.match .valeur-carte{
+     animation : dance 0.8s linear infinite 200ms;
+ }
+ // suite animation match (definition de l'animation "dance")
+ @keyframes dance {
+0%, 100% {
+    transform:  rotate(0);
+}
+25% {
+    transform:  rotate(-20deg); 
+}
+75% {
+    transform:  rotate(30deg); 
+}
+
+ }
+
+
+
+// section carte révélée : 
+.carte-revele{
+    border-radius: 25%;  
+    background-color: white;
+    transform: rotateX(180deg); // on cache la carte revele en la tournant a 180degres
+}
+
+
+// gestion survol carte revelé
+.carte-revele:hover .valeur-carte {
+    transform:scale(1);
+}
+// section carte cachée : 
+.carte-cache{
+    background: linear-gradient(orangered, gold);
+    border-radius: 25%;     
+}
+
+
+// gestion des ornements
+.ornement{
+position:absolute;
+width: 80%;
+transition: width 200ms ease-in-out ; // on prépare la petite
+// animation de survol avec les ornements
+}
+
+.valeur-carte{ // classe de tt les images de fruits
+transition: transform 200ms ease-in-out ;
+transform:scale(.9); // pour gestion survol carte revelé
+border-radius: 25%; 
+width: 100px;
+height: 100px;
+border-style: solid;
+border-color: rgb(255, 255, 255);
+}
+// placement des ornements hauts et bas 
+.ornement-haut{
+top:0;
+// height: 100%;
+}
+
+.ornement-bas{
+transform: rotateX(180deg);
+bottom:0;
+// height: 100%;
+}
+
+// definition de l'animation ornement
+.carte-cache:hover .ornement {
+width:90px;
+}
+
+
+
+
+
+
+
+///////////////////////////////////////////////////////////
+////////////////////// SECTION OVERLAY :                 //
+///////////////////// .surcouche-info,                   //
+///////////////////// .surcouche-info.visible,           //
+///////////////////// . conteneneur-game                 //
+///////////////////////////////////////////////////////////
+// start game // restart // game over // victory
+
+
+.surcouche-info {
+display:none;// non visible
+position : fixed; 
+top : 0;
+bottom: 0;
+left:0;
+right:0;
+justify-content: center;
+align-items: center;
+z-index:100;
+color:orangered;
+font-family: Better, Arial, Helvetica, sans-serif;
+}
+
+.surcouche-info.visible {
+display:flex; // visible si classe visible
+flex-direction : column;
+animation : surcouche-anim 500ms forwards ;
+
+}
+
+@keyframes surcouche-anim {
+from {
+    background-color: rgba(0,0,0,0);
+    font-size:1em;
+}
+to {
+    background-color: rgba(0,0,0,.8);
+    font-size:6em;
+}
+
+}
+
+.surcouche-petit-texte {
+font-size: .3em;
+
+}
+
+#texte-game-over{
+text-align:center;
+}
+
+.surcouche-info{
+    text-align:center;
+
+}
+
+// regles si le viewport < 600px; 
+@media (max-width: 600px){
+    .conteneur-game{
+        grid-template-columns: repeat(2,auto);
+    }
+    .conteneur-info-game{ // décommenter si on veut contracter infos game qd ecran<600px
+       // flex-direction: column;
+       // align-items: center;
+    }
+}

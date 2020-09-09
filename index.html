@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <title>Memory Game</title>
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <link rel="stylesheet" type="text/css" href="./css/style.css"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    </head>
+    <body>
+        <!--titre jeux-->
+        <h1 class="titre-game">Memory Game By Zbrehbreh</h1>
+        <div class="surcouche-info"><!--la classe visible va nous permettre d'afichier/masquer l'overlay-->
+            Clic pour commencer
+        </div>
+
+        <div id="texte-game-over" class="surcouche-info"><!--la classe visible va nous permettre d'afichier/masquer l'overlay-->
+            GAME OVER
+            <span  class="surcouche-petit-texte">Clic pour recommencer</span>
+        </div>
+        
+        <div id="texte-victoire" class="surcouche-info "><!--la classe visible va nous permettre d'afichier/masquer l'overlay-->
+            VICTOIIIRE
+            <span  class="surcouche-petit-texte">Clic pour recommencer</span>
+        </div>
+        
+        
+        
+        
+        
+        <!--conteneur general (info jeux + jeux)-->
+        <div class="conteneur-game">
+
+            <!--conteneur info jeux (chronometre + nombre d'essais)-->
+            <div class="conteneur-info-game">
+                <div class="info-game">
+                 Chrono :<span id="temps-restant">60</span>   
+                </div>
+                <div class="info-game">
+                    Essais :<span id="essais">0</span>   
+                </div>
+            </div>
+
+            <!--On place nos 16 cartes dans le conteneur général : -->
+            <div class="carte"><!--la classe visible va nous permettre d'afichier/masquer la carte-->
+                <div class="carte-cache carte-style">
+                    <img class="ornement ornement-haut" 
+                    src="./assets/imgs/ornement.png">
+                 <img class="ornement ornement-bas" 
+                 src="./assets/imgs/ornement.png">    
+                </div>
+
+                <div class="carte-revele carte-style">   
+                    <img class="valeur-carte" 
+                    src="./assets/imgs/A.png">   
+                </div>
+            </div>
+            
+            <div class="carte"><!--la classe visible va nous permettre d'afichier/masquer la carte-->
+                <div class="carte-cache carte-style">
+                    <img class="ornement ornement-haut" 
+                    src="./assets/imgs/ornement.png">
+                 <img class="ornement ornement-bas" 
+                 src="./assets/imgs/ornement.png">    
+                </div>
+
+                <div class="carte-revele carte-style">   
+                    <img class="valeur-carte" 
+                    src="./assets/imgs/A.png">   
+                </div>
+            </div>
+
+            <div class="carte"><!--la classe visible va nous permettre d'afichier/masquer la carte-->
+                <div class="carte-cache carte-style">
+                    <img class="ornement ornement-haut" 
+                    src="./assets/imgs/ornement.png">
+                 <img class="ornement ornement-bas" 
+                 src="./assets/imgs/ornement.png">    
+                </div>
+
+                <div class="carte-revele carte-style">   
+                    <img class="valeur-carte" 
+                    src="./assets/imgs/B.png">   
+                </div>
+            </div>
+
+            <div class="carte"><!--la classe visible va nous permettre d'afichier/masquer la carte-->
+                <div class="carte-cache carte-style">
+                    <img class="ornement ornement-haut" 
+                    src="./assets/imgs/ornement.png">
+                 <img class="ornement ornement-bas" 
+                 src="./assets/imgs/ornement.png">    
+                </div>
+
+                <div class="carte-revele carte-style">   
+                    <img class="valeur-carte" 
+                    src="./assets/imgs/B.png">   
+                </div>
+            </div>
+
+            <div class="carte"><!--la classe visible va nous permettre d'afichier/masquer la carte-->
+                <div class="carte-cache carte-style">
+                    <img class="ornement ornement-haut" 
+                    src="./assets/imgs/ornement.png">
+                 <img class="ornement ornement-bas" 
+                 src="./assets/imgs/ornement.png">    
+                </div>
+
+                <div class="carte-revele carte-style">   
+                    <img class="valeur-carte" 
+                    src="./assets/imgs/C.png">   
+                </div>
+            </div>
+
+            <div class="carte"><!--la classe visible va nous permettre d'afichier/masquer la carte-->
+                <div class="carte-cache carte-style">
+                    <img class="ornement ornement-haut" 
+                    src="./assets/imgs/ornement.png">
+                 <img class="ornement ornement-bas" 
+                 src="./assets/imgs/ornement.png">    
+                </div>
+
+                <div class="carte-revele carte-style">   
+                    <img class="valeur-carte" 
+                    src="./assets/imgs/C.png">   
+                </div>
+            </div>
+
+            <div class="carte"><!--la classe visible va nous permettre d'afichier/masquer la carte-->
+                <div class="carte-cache carte-style">
+                    <img class="ornement ornement-haut" 
+                    src="./assets/imgs/ornement.png">
+                 <img class="ornement ornement-bas" 
+                 src="./assets/imgs/ornement.png">    
+                </div>
+
+                <div class="carte-revele carte-style">   
+                    <img class="valeur-carte" 
+                    src="./assets/imgs/D.png">   
+                </div>
+            </div>
+
+            <div class="carte"><!--la classe visible va nous permettre d'afichier/masquer la carte-->
+                <div class="carte-cache carte-style">
+                    <img class="ornement ornement-haut" 
+                    src="./assets/imgs/ornement.png">
+                 <img class="ornement ornement-bas" 
+                 src="./assets/imgs/ornement.png">    
+                </div>
+
+                <div class="carte-revele carte-style">   
+                    <img class="valeur-carte" 
+                    src="./assets/imgs/D.png">   
+                </div>
+            </div>
+
+            <div class="carte"><!--la classe visible va nous permettre d'afichier/masquer la carte-->
+                <div class="carte-cache carte-style">
+                    <img class="ornement ornement-haut" 
+                    src="./assets/imgs/ornement.png">
+                 <img class="ornement ornement-bas" 
+                 src="./assets/imgs/ornement.png">    
+                </div>
+
+                <div class="carte-revele carte-style">   
+                    <img class="valeur-carte" 
+                    src="./assets/imgs/E.png">   
+                </div>
+            </div>
+
+            <div class="carte"><!--la classe visible va nous permettre d'afichier/masquer la carte-->
+                <div class="carte-cache carte-style">
+                    <img class="ornement ornement-haut" 
+                    src="./assets/imgs/ornement.png">
+                 <img class="ornement ornement-bas" 
+                 src="./assets/imgs/ornement.png">    
+                </div>
+
+                <div class="carte-revele carte-style">   
+                    <img class="valeur-carte" 
+                    src="./assets/imgs/E.png">   
+                </div>
+            </div>
+
+            <div class="carte"><!--la classe visible va nous permettre d'afichier/masquer la carte-->
+                <div class="carte-cache carte-style">
+                    <img class="ornement ornement-haut" 
+                    src="./assets/imgs/ornement.png">
+                 <img class="ornement ornement-bas" 
+                 src="./assets/imgs/ornement.png">    
+                </div>
+
+                <div class="carte-revele carte-style">   
+                    <img class="valeur-carte" 
+                    src="./assets/imgs/F.png">   
+                </div>
+            </div>
+
+            <div class="carte"><!--la classe visible va nous permettre d'afichier/masquer la carte-->
+                <div class="carte-cache carte-style">
+                    <img class="ornement ornement-haut" 
+                    src="./assets/imgs/ornement.png">
+                 <img class="ornement ornement-bas" 
+                 src="./assets/imgs/ornement.png">    
+                </div>
+
+                <div class="carte-revele carte-style">   
+                    <img class="valeur-carte" 
+                    src="./assets/imgs/F.png">   
+                </div>
+            </div>
+
+            <div class="carte"><!--la classe visible va nous permettre d'afichier/masquer la carte-->
+                <div class="carte-cache carte-style">
+                    <img class="ornement ornement-haut" 
+                    src="./assets/imgs/ornement.png">
+                 <img class="ornement ornement-bas" 
+                 src="./assets/imgs/ornement.png">    
+                </div>
+
+                <div class="carte-revele carte-style">   
+                    <img class="valeur-carte" 
+                    src="./assets/imgs/G.png">   
+                </div>
+            </div>
+
+            <div class="carte"><!--la classe visible va nous permettre d'afichier/masquer la carte-->
+                <div class="carte-cache carte-style">
+                    <img class="ornement ornement-haut" 
+                    src="./assets/imgs/ornement.png">
+                 <img class="ornement ornement-bas" 
+                 src="./assets/imgs/ornement.png">    
+                </div>
+
+                <div class="carte-revele carte-style">   
+                    <img class="valeur-carte" 
+                    src="./assets/imgs/G.png">   
+                </div>
+            </div>
+
+            <div class="carte"><!--la classe visible va nous permettre d'afichier/masquer la carte-->
+                <div class="carte-cache carte-style">
+                    <img class="ornement ornement-haut" 
+                    src="./assets/imgs/ornement.png">
+                 <img class="ornement ornement-bas" 
+                 src="./assets/imgs/ornement.png">    
+                </div>
+
+                <div class="carte-revele carte-style">   
+                    <img class="valeur-carte" 
+                    src="./assets/imgs/H.png">   
+                </div>
+            </div>
+
+            <div class="carte"><!--la classe visible va nous permettre d'afichier/masquer la carte-->
+                <div class="carte-cache carte-style">
+                    <img class="ornement ornement-haut" 
+                    src="./assets/imgs/ornement.png">
+                 <img class="ornement ornement-bas" 
+                 src="./assets/imgs/ornement.png">    
+                </div>
+
+                <div class="carte-revele carte-style">   
+                    <img class="valeur-carte" 
+                    src="./assets/imgs/H.png">   
+                </div>
+            </div>
+
+        
+
+
+          
+
+        </div>
+
+
+        <script src="./js/script.js"></script> 
+        
+    </body>
+</html>
+    
+    
