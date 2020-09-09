@@ -1,33 +1,29 @@
 * {
   box-sizing: border-box; }
 
-h1 {
-  font-weight: normal; }
-
 @font-face {
   font-family: "Better";
   src: url("../assets/fonts/better_phoenix_sample.woff") format("woff"), url("../assets/fonts/better_phoenix_sample.ttf") format("ttf"); }
 
+h1 {
+  font-weight: normal;
+  margin-top: 2%; }
+
 body {
   margin: 0;
-  background: radial-gradient(white, gold); }
+  background: radial-gradient(white, #494739); }
 
 html {
   min-height: 100vh; }
 
 .titre-game {
-  color: orangered;
+  color: #00ffea;
   font-family: Better, Arial, Helvetica, sans-serif;
   text-align: center;
   font-size: 3em; }
 
-.conteneur-info-game {
-  grid-column: 1 / -1;
-  display: flex;
-  justify-content: space-between; }
-
-.info-game {
-  color: orangered;
+.info-game, #temps-restant, .conteneur-info-game-essais {
+  color: #00ffea;
   font-family: Better, Arial, Helvetica, sans-serif;
   font-weight: normal;
   text-align: center;
@@ -80,7 +76,7 @@ html {
     transform: scale(1); }
 
 .carte-cache {
-  background: linear-gradient(orangered, gold);
+  background: linear-gradient(#00ffea, #494739);
   border-radius: 25%;
   border-style: solid;
   border-color: white;
@@ -119,7 +115,7 @@ html {
   left: 0;
   right: 0;
   z-index: 100;
-  color: orangered;
+  color: #00ffea;
   font-family: Better, Arial, Helvetica, sans-serif; }
   .surcouche-info.visible {
     display: flex;
@@ -131,18 +127,109 @@ html {
     background-color: rgba(0, 0, 0, 0);
     font-size: 1em; }
   to {
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.9);
     font-size: 6em; } }
 
 .surcouche-petit-texte {
   font-size: 0.3em; }
 
+.surcouche-texte-principal {
+  padding-top: 10%; }
+
 #texte-game-over {
+  text-align: center; }
+
+#texte-victoire {
   text-align: center; }
 
 .surcouche-info {
   text-align: center; }
 
+#inputPseudo {
+  width: 75%;
+  margin-top: 50px;
+  margin-right: auto;
+  margin-left: auto;
+  border-radius: 4px;
+  transition-duration: 0.2s;
+  font-size: .3em;
+  font-family: Better, Arial, Helvetica, sans-serif;
+  color: #00ffea;
+  text-align: center; }
+  #inputPseudo:focus {
+    background-color: #ccfffb; }
+
+#btnStart {
+  margin-right: auto;
+  margin-left: auto;
+  border-color: #00ffea;
+  font-size: .3em;
+  font-family: Better, Arial, Helvetica, sans-serif;
+  width: 25%;
+  margin-top: 50px;
+  background-color: white;
+  color: #00ffea;
+  transition-duration: 0.4s; }
+  #btnStart:hover {
+    background-color: #00ffea;
+    color: white; }
+
+.info-game-chrono {
+  position: relative;
+  margin-top: 100px;
+  width: 100%;
+  height: 100%; }
+
+#temps-restant {
+  position: absolute;
+  font-size: 2em;
+  left: 50%;
+  transform: translate(-50%, -50%); }
+
+#progress-bar-circulaire {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); }
+
+.tableScoreBoard {
+  font-size: 30%; }
+
+th, tr, td {
+  border: 1px solid #00ffea;
+  border-radius: 5%; }
+
+.tableScoreBoard {
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 50px;
+  width: 75%; }
+
+.conteneur-info-game-essais {
+  display: none; }
+
 @media (max-width: 600px) {
   .conteneur-game {
-    grid-template-columns: repeat(2, auto); } }
+    grid-template-columns: repeat(2, auto); }
+  .surcouche-texte-principal {
+    font-size: 0.7em; }
+  .titre-game {
+    font-size: 1.5em; }
+  #progress-bar-circulaire {
+    width: 50px;
+    height: 50px; }
+  .info-game-chrono {
+    margin-top: 50px; }
+  #temps-restant {
+    font-size: 1em; }
+  .carte {
+    height: 66.66667px;
+    width: 66.66667px; }
+  .carte-style {
+    height: 66.66667px;
+    width: 66.66667px; }
+  .valeur-carte {
+    height: 66.66667px;
+    width: 66.66667px; } }
