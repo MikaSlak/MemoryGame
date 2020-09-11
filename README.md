@@ -83,7 +83,7 @@ remplacer ``` $db_pass=''``` par  ```$db_pass='root'```
 
 ## Fragilités :	
 
-+ !!!! ***FAIRE UN TRY pour les methodes de connexion/interaction avec la base de donnée *** !!!!
++ !!!! **FAIRE UN TRY pour les methodes de connexion/interaction avec la base de donnée ** !!!!
 
 + Sécurisation des variables pseudoName et pseudoSpan coté javascript (**./script.js**) :
 Il y a un check de caractères spéciaux sur le pseudo quand on lance la partie + 
