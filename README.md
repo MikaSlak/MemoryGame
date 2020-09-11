@@ -1,7 +1,7 @@
 # Memory game (HTML, SASS, JAVASCRIPT, PHP, MySQL)
-//////////////////////////
+
 ##Fonctionnement général :
-//////////////////////////
+
 + Le jeu tourne en HTML, CSS (SASS), JAVASCRIPT, PHP, MYSQL
 
 + Nous avons 6 commits : 
@@ -12,14 +12,16 @@
 	- **Cinquieme etape** : on attaque le back et les modifications du front
 	- **CODE FINAL**
 
-+ Il est possible de modifier tout le theme du jeu en modifiant les premieres lignes du fichier scss (./scss/style.scss)
-'''
++ Il est possible de modifier tout le theme du jeu en modifiant les premieres lignes du fichier scss (**./scss/style.scss**)
+
+```
 $font-game:Better, Arial, Helvetica, sans-serif;
 $general-color1:orangered; 
 $general-color2:gold; 
 $general-color3:white;
 $overlay-bkgnd: rgba(0,0,0,.9); 
-'''
+```
+
 + Coté javascript, nous avons deux classes : 
 	- **ControleurAudio()**
 	- **Game(temp_de_partie, tableau_de_carte)**
@@ -35,14 +37,15 @@ Le fichier **index.php** utilisera notre classe GameBack
 + Le code est largement commenté pour une meilleur compréhension !
 
 
-////////////////
+
 ##Deploiement : 
-////////////////
-Depuis l'interface phpMyAdmin de notre serveur, il nous faut créer une nouvelle base de donnée (nom : "memorygamedb")
+
+
+Depuis l'interface phpMyAdmin de notre serveur, il nous faut créer une nouvelle base de donnée (**nom : "memorygamedb"**)
 Puis aller dans la section SQL et entrer cette commande pour structurer notre DB(=data base = base de donnée) : 
 
--- debut du code --
-'''
+
+```
 CREATE TABLE `memory_game_main_table` (
   `MyIndex` int(11) NOT NULL,
   `pseudo` tinytext NOT NULL COMMENT 'pseudo du joueur',
@@ -50,26 +53,37 @@ CREATE TABLE `memory_game_main_table` (
   `clicks` smallint(6) NOT NULL COMMENT 'nombre de clicks durant la partie',
   `score` int(11) NOT NULL COMMENT 'score final'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-'''
+```
+
 -- fin du code --
 
 (**cf ./score.php pour plus de détails sur les db**) 
 
 Pour terminer, rdv dans notre fichier **score.php ligne 8** :
+```
 $db = new GameBack('memorygamedb'); 
+```
 et dans notre fichier **index.php ligne 3** :
+```
 $gameback = new GameBack('memorygamedb');
+```
 
 Et comme indiqué dans notre constructeur de la classe gameback (**cf ./gamebackClass.php ligne 14**) :
+```
 ($db_name, $db_user = 'root', $db_pass='', $db_host = 'localhost') 
+```
 nous allons pouvoir préciser pour ces deux lignes les informations de connexion à votre db :
+```
 $db = new GameBack('db_name', 'db_user', 'db_pass','db_host');
+```
 Ces informations sont fournies par l'hébergeur lors de la création d'une nouvelle base de donnée.
 
 Nous avons également deux arguments par defaut (db_user et db_host) pour facilement déployer en local.
 Toujours en local, si notre password de db est 'root' alors il nous faut éditer le constructeur de l'objet (**cf ./gamebackClass.php ligne 14**) :
+```
 ($db_name, $db_user = 'root', $db_pass='root', $db_host = 'localhost') 
-remplacer  $db_pass='' par  $db_pass='root'
+```
+remplacer ``` $db_pass=''``` par  ```$db_pass='root'```
 
 
 
