@@ -90,13 +90,15 @@ Il y a un check de caractères spéciaux sur le pseudo quand on lance la partie 
 un check pour verifier qu'on ne prend pas le nom d'un joueur de la scoreBoard.
 Cependant ce check devrait aussi s'éffectuer lors d'une victoire !
 
-+ Sécurisation des variable $_POST :
++ **Sécurisation des variable $_POST** :
 Très peu de sécurité coté back, il nous faudrait faire des check sur toute les variables 
-lors de la victoire pour éviter les injections SQL.
+lors de la victoire pour éviter les **injections SQL**.
 
-- Passer les variables en arguments aux methodes de l'objet back suivantes :afficherJoueur(), divSurcoucheLancement(), divSurcoucheVictoire() (**probleme de scoping**)
+- Passer les variables en arguments aux methodes de l'objet back suivantes :**afficherJoueur()**, **divSurcoucheLancement()**, **divSurcoucheVictoire()** (**probleme de scoping**)
 
-- spliter l'objet back en deux objets, un objet db et un objet game ?
+- **séparer les fichiers backs et front dans deux dossiers client/serveur** ?
+
+- spliter l'objet back en **deux objets**, un objet db et un objet game ?
 
 
 
@@ -109,8 +111,10 @@ Faire tourner la progressBar autour du plateau de cartes ?
 ## Credits :
 
 Code : 
-progressBar.js -> https://kimmobrunfeldt.github.io/progressbar.js/
-codepen.io
-youtube
+>progressBar.js https://kimmobrunfeldt.github.io/progressbar.js/
+>codepen.io
+>youtube
+
 Sons :
-musique de fond : "snake jazz" - Rick and morty
+> musique de fond : "snake jazz" - Rick and morty
+> autres sons : Homemade
