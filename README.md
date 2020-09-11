@@ -1,10 +1,10 @@
 # Memory game (HTML, SASS, JAVASCRIPT, PHP, MySQL)
 
-##Fonctionnement général :
+## Fonctionnement général :
 
 + Le jeu tourne en HTML, CSS (SASS), JAVASCRIPT, PHP, MYSQL
 
-+ Nous avons 6 commits : 
++ Less 6 commits qui nous interessent : 
 	- **Premiere etape** : HTML et CSS terminés
 	- **Deuxieme etape** : On passe en sass
 	- **Troisieme etape** : javascript, moteur jeu fonctionnel
@@ -38,13 +38,10 @@ Le fichier **index.php** utilisera notre classe GameBack
 
 
 
-##Deploiement : 
-
+## Deploiement : 
 
 Depuis l'interface phpMyAdmin de notre serveur, il nous faut créer une nouvelle base de donnée (**nom : "memorygamedb"**)
 Puis aller dans la section SQL et entrer cette commande pour structurer notre DB(=data base = base de donnée) : 
-
-
 ```
 CREATE TABLE `memory_game_main_table` (
   `MyIndex` int(11) NOT NULL,
@@ -54,9 +51,6 @@ CREATE TABLE `memory_game_main_table` (
   `score` int(11) NOT NULL COMMENT 'score final'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 ```
-
--- fin du code --
-
 (**cf ./score.php pour plus de détails sur les db**) 
 
 Pour terminer, rdv dans notre fichier **score.php ligne 8** :
@@ -87,10 +81,10 @@ remplacer ``` $db_pass=''``` par  ```$db_pass='root'```
 
 
 
+## Fragilités :	
 
-//////////////
-##Fragilités :						     						                                //
-//////////////
++ !!!! ***FAIRE UN TRY pour les methodes de connexion/interaction avec la base de donnée *** !!!!
+
 + Sécurisation des variables pseudoName et pseudoSpan coté javascript (**./script.js**) :
 Il y a un check de caractères spéciaux sur le pseudo quand on lance la partie + 
 un check pour verifier qu'on ne prend pas le nom d'un joueur de la scoreBoard.
@@ -102,41 +96,21 @@ lors de la victoire pour éviter les injections SQL.
 
 - Passer les variables en arguments aux methodes de l'objet back suivantes :afficherJoueur(), divSurcoucheLancement(), divSurcoucheVictoire() (**probleme de scoping**)
 
-***- FAIRE UN TRY pour les methodes de connexion/interaction avec la base de donnée !!***
-
 - spliter l'objet back en deux objets, un objet db et un objet game ?
 
 
 
-///////////////
-##évolutions ?
-///////////////
-
+## évolutions ?
 
 Implementer l'objet gameBack avec une methode plus pointue pour la gestion de la victoire ?
 
-
 Faire tourner la progressBar autour du plateau de cartes ?
 
-//////////
-Credits :
-/////////
-//code : 
+## Credits :
+
+Code : 
 progressBar.js -> https://kimmobrunfeldt.github.io/progressbar.js/
 codepen.io
 youtube
-// sons :
+Sons :
 musique de fond : "snake jazz" - Rick and morty
-
-
-
-
-
-
-
-
-
-
-
-
-
